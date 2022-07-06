@@ -23,9 +23,59 @@ router.get('/', async (req, res) => {
  }
 });
 
-router.get('/product', (req, res) => {
-  //this will render the view otherpage.handlebars
-  res.render('otherpage');
+router.get('/product/:id', async (req, res) => {
+  try {
+    const dbProduct = await Product.findByPk(req.params.id, {
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'price', 'imageUrl'],
+    }]
+    });
+    res.render('product', {
+      product: dbProduct,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+  res.render('productpage');
+});
+
+router.get('/category', async (req, res) => {
+  try {
+    const dbProducts = await Product.findAll({
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'price', 'imageUrl'],
+    }]
+    });
+    res.render('category', {
+      products: dbProducts,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+  });
+
+router.get('/category/:id', async (req, res) => {
+  try {
+    const dbproducts = await Product.findByPk(req.params.id, {
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'price', 'imageUrl'],
+      }],
+    });
+    res.render('category', {
+      products: dbproducts,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 

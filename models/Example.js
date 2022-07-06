@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Example extends Model {}
+class User extends Model {}
 
-Example.init(
+User.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,10 +12,14 @@ Example.init(
       autoIncrement: true,
     },
     //name this column whatever you want
-    column1: {
+    username: {
       //this is the type of data that will be stored in this column
       type: DataTypes.STRING,
       //each time a row of data is inserted, this column will need to have a value
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     column2: {

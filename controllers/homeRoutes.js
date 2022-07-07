@@ -24,4 +24,9 @@ router.get('/products', (req, res) => {
   res.render('products');
 });
 
+router.get('/logout', function (req, res) {
+  req.session.destroy();
+  res.send('logout success!');
+});
+
 module.exports = router;

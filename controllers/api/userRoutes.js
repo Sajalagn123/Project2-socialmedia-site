@@ -48,6 +48,7 @@ router.post('/dologin', (req, res) => {
       if (user.length != 0) {
         req.session.loggedIn = true;
         req.session.email = email;
+        req.session.userId = user[0].getDataValue('id');
 
         let output = {status:'success'};
         res.status(200).json(output);

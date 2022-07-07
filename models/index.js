@@ -1,7 +1,13 @@
-//the MODEL of the MVC, define all data logic and relations here
+// import models
+const User = require('./User');
+const Product = require('./Product');
 
-//import the example model
-const Example = require('./Example');
+// Products belongsTo User
+Product.belongsTo(User, { foreignKey: 'user_id' });
+// Users have many Products
+User.hasMany(Product);
 
-
-module.exports = { Example };
+module.exports = {
+  User,
+  Product
+};

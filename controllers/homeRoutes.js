@@ -12,4 +12,21 @@ router.get('/otherpage', (req, res) => {
   res.render('otherpage');
 });
 
+router.get('/register', (req, res) => {
+  res.render('register');
+});
+
+router.get('/login', (req, res) => {
+  res.render('login');
+});
+
+router.get('/products', (req, res) => {
+  res.render('products');
+});
+
+router.get('/logout', function (req, res) {
+  req.session.destroy();
+  res.send('logout success!');
+});
+
 module.exports = router;

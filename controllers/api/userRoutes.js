@@ -1,82 +1,61 @@
-/* eslint-disable no-unused-vars */
+
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
 const { User } = require('../../models');
 
 
-//this get routes will return all data of example table from the database
-router.post('/doregister', async (req, res) => {
-  var email = req.body.email;
-  var password = req.body.password;
-  //console.log(email, password);
-
-  const data =
-    {
-      username: email,
-      password: password,
-    };
-
-  User.create(data)
-    .then((user) => {
-
-      let output = {status:'success'};
-      res.status(200).json(output);
-
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(200).json(err);
+router.get('/', async (req, res) => {
+  try {
+    const UserData = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+      email: req.body.email,
     });
+    req.session.save(() => {
+      req.session.loggedIn = true;
+      req.status(200).json(UserData);
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
-router.post('/dologin', (req, res) => {
-  //res.send('received data')
-  var email = req.body.email;
-  var password = req.body.password;
-  //console.log(email, password);
-
-  const condition =
-  {
-    where: {
-      username: email,
-      password: password,
+router.post('/login', async (req,res) => {
+  try {
+    const UserData = await User.findOne({
+      where: {
+        email:req.body.email,
+      },
+    });
+    if (!UserData) {
+      res.status(401).json({ message: 'Invalid Email or Password. Please try again!' });
+      return;
     }
-  };
-
-  User.findAll(condition)
-    .then((user) => {
-      // eslint-disable-next-line eqeqeq
-      if (user.length != 0) {
-        req.session.loggedIn = true;
-        req.session.email = email;
-        req.session.userId = user[0].getDataValue('id');
-
-        let output = {status:'success'};
-        res.status(200).json(output);
-      } else {
-
-        let output = {status:'failure'};
-        res.status(200).json(output);
-
-      }
-
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
+    const passwordValid = await bcrypt.compare(req.body.password, UserData.password);
+    if (!passwordValid) {
+      res.status(401).json({ message: 'Invalid Email or Password. Please try again!' });
+      return;
+    }
+    req.session.save(() => {
+      req.sessions,loggedIn = true;
+      req.status(200).json({user: UserData, message: 'You are now logged in!'});
     });
-
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
-
-router.get('/isloggedin', function (req, res) {
-
-  if (req.session.loggedIn) {
-    let output = {status:'success'};
-    res.status(200).json(output);
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn){
+    req.session.destroy(() => {
+      req.status(204).end();
+    });
   } else {
-    let output = {status:'failure'};
-    res.status(200).json(output);
+    res.status(404).end();
   }
 });
 
 module.exports = router;
+=======

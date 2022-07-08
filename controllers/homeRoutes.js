@@ -1,32 +1,92 @@
+
 //These are all the view routes for your application
 const router = require('express').Router();
+const { User, Product } = require('../models/User');
+const authy = require('../utils/helpers');
 
 //when a GET request is received on the root(/) route,
 //render the home.handlebars view
-router.get('/', (req, res) => {
-  res.render('home');
+router.get('/', authy, async (req, res) => {
+  try {
+    const dbProducts = await Product.findAll({
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'price', 'imageUrl'],
+      }]
+    });
+    res.render('home', {
+      products: dbProducts,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
-router.get('/otherpage', (req, res) => {
-  //this will render the view otherpage.handlebars
-  res.render('otherpage');
+router.get('/product/:id', authy, async (req, res) => {
+  try {
+    const dbProduct = await Product.findByPk(req.params.id, {
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'price', 'imageUrl'],
+      }]
+    });
+    res.render('product', {
+      product: dbProduct,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+  res.render('productpage');
 });
 
-router.get('/register', (req, res) => {
-  res.render('register');
+router.get('/category', authy, async (req, res) => {
+  try {
+    const dbProducts = await Product.findAll({
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'price', 'imageUrl'],
+      }]
+    });
+    res.render('category', {
+      products: dbProducts,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
+
+router.get('/category/:id', authy, async (req, res) => {
+  try {
+    const dbproducts = await Product.findByPk(req.params.id, {
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'price', 'imageUrl'],
+      }],
+    });
+    res.render('category', {
+      products: dbproducts,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 
 router.get('/login', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
   res.render('login');
 });
 
-router.get('/products', (req, res) => {
-  res.render('products');
-});
-
-router.get('/logout', function (req, res) {
-  req.session.destroy();
-  res.send('logout success!');
-});
-
 module.exports = router;
+=======

@@ -104,7 +104,7 @@ $(function () {
                                 <td>'+ data[i].product_name + '</td>\
                                 <td>'+ data[i].price + '</td>\
                                 <td>'+ data[i].description + '</td>\
-                                <td>'+ data[i].image + '</td>\
+                                <td><img width="300" src="'+ data[i].image + '"></td>\
                                 <td><button onclick=\'removeProduct('+ data[i].id + ')\'>Remove</button></td>\
                             </tr>\
                 ';
@@ -143,7 +143,7 @@ $(function () {
                                 <td>'+ data[i].product_name + '</td>\
                                 <td>'+ data[i].price + '</td>\
                                 <td>'+ data[i].description + '</td>\
-                                <td>'+ data[i].image + '</td>\
+                                <td><img width="300" src="'+ data[i].image + '"></td>\
                             </tr>\
                 ';
       }

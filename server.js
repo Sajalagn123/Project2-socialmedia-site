@@ -18,7 +18,7 @@ const sess = {
   secret: 'Super secret secret',
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7 * 2, // 2 weeks (just an example, you can decide how long to keep session alive)
-    // setTimeout: 300000
+=======
   },
   resave: false,
   saveUninitialized: true,

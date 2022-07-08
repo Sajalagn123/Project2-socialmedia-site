@@ -1,3 +1,4 @@
+
 const authy = (req, res, next) => {
   if (!req.session.loggedIn) {
     res.redirect('/login');
@@ -7,3 +8,4 @@ const authy = (req, res, next) => {
 };
 
 module.exports = authy;
+=======

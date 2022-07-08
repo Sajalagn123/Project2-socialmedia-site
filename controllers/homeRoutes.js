@@ -1,3 +1,4 @@
+
 //These are all the view routes for your application
 const router = require('express').Router();
 const { User, Product } = require('../models/User');
@@ -88,3 +89,4 @@ router.get('/login', (req, res) => {
 });
 
 module.exports = router;
+=======

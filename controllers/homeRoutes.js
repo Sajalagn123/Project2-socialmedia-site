@@ -11,7 +11,7 @@ router.get('/', authy, async (req, res) => {
     const dbProducts = await Product.findAll({
       include: [{
         model: Product,
-        attributes: ['id', 'name', 'price', 'imageUrl'],
+        attributes: ['id', 'product_name', 'price', 'imageUrl'],
       }]
     });
     res.render('home', {

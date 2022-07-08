@@ -5,23 +5,22 @@ const { User } = require('../../models');
 
 router.get('/', async (req, res) => {
   try {
-   const UserData = await User.create({
-     username: req.body.username,
-     password: req.body.password,
-     email: req.body.email,
-  });
-  req.session.save(() => {
-   req.session.loggedIn = true;
-   req.status(200).json(UserData);
-  });
- }
- catch (err) {
-   console.log(err);
-   res.status(500).json(err);
- }
- });
+    const UserData = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+      email: req.body.email,
+    });
+    req.session.save(() => {
+      req.session.loggedIn = true;
+      req.status(200).json(UserData);
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
-router.post("/login", async (req,res) => {
+router.post('/login', async (req,res) => {
   try {
     const UserData = await User.findOne({
       where: {
@@ -29,18 +28,17 @@ router.post("/login", async (req,res) => {
       },
     });
     if (!UserData) {
-      res.status(401).json({ message: "Invalid Email or Password. Please try again!" });
+      res.status(401).json({ message: 'Invalid Email or Password. Please try again!' });
       return;
     }
     const passwordValid = await bcrypt.compare(req.body.password, UserData.password);
     if (!passwordValid) {
-      res.status(401).json({ message: "Invalid Email or Password. Please try again!" });
+      res.status(401).json({ message: 'Invalid Email or Password. Please try again!' });
       return;
     }
-    
     req.session.save(() => {
       req.sessions,loggedIn = true;
-      req.status(200).json({user: UserData, message: "You are now logged in!"});
+      req.status(200).json({user: UserData, message: 'You are now logged in!'});
     });
   } catch (err) {
     console.log(err);

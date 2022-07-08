@@ -1,3 +1,5 @@
+
+=======
 /* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
 // example frontend js file loaded into the views that need FE logic (clicks, forms, interactions, etc.)

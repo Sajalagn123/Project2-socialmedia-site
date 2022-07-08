@@ -1,3 +1,5 @@
+
+=======
 const seedUsers = require('./user-seeds');
 const seedProducts = require('./product-seeds');
 const sequelize = require('../config/connection');
@@ -6,7 +8,7 @@ const sequelize = require('../config/connection');
 //npm run seed will execute this file, which will seed the database with the example data
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
-
+=======
   await sequelize.sync({ force: true });
     console.log('\n----- DATABASE SYNCED -----\n');
     

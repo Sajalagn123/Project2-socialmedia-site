@@ -1,7 +1,7 @@
 
 //These are all the view routes for your application
 const router = require('express').Router();
-const { User, Product } = require('../models/User');
+const { User, Product} = require('../models');
 const authy = require('../utils/helpers');
 
 //when a GET request is received on the root(/) route,
@@ -89,4 +89,3 @@ router.get('/login', (req, res) => {
 });
 
 module.exports = router;
-=======

@@ -384,6 +384,7 @@ $('#productForm').on('submit', (e) => {
 });
 
 /** Remove Product **/
+// eslint-disable-next-line no-redeclare
 function removeProduct(productId) {
   var option = confirm('Remove product ?');
   if (option) {

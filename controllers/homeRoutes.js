@@ -1,11 +1,9 @@
 
-//These are all the view routes for your application
 const router = require('express').Router();
 const { User, Product } = require('../models');
 const authy = require('../utils/helpers');
 
-//when a GET request is received on the root(/) route,
-//render the home.handlebars view
+
 router.get('/', async (req, res) => {
   try {
     const dbProducts = await Product.findAll({

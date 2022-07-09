@@ -88,4 +88,19 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/register', async (req, res) => {
+  try {
+    const dbUsers = await User.findAll();
+    res.render('register', {
+      // users: dbUsers,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+
+});
+
+
 module.exports = router;

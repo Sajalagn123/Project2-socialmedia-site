@@ -305,14 +305,15 @@ nav {
 .form__link:hover {
   text-decoration: underline;
 }
-
+/* 
 html {
   height: 100%;
-}
+} */
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  height: fit-content;
   background: linear-gradient(#141e30, #243b55);
 }
 

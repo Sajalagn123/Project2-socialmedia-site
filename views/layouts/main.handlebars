@@ -22,6 +22,10 @@
     ></script>
 
   </head>
+
+  <style>
+    * { color: whitesmoke } .ui-widget-header td { color:darkgreen!important }
+  </style>
   <body>
     {{! this is the main html file wrapper for all your views }}
     <header>
@@ -36,8 +40,11 @@
         </li>
       </ul>
     </header>
-    {{! placeholder for where the view will be injected }}
-    {{{body}}}
+    <div class='content' style='margin-top:175px'>
+
+      {{! placeholder for where the view will be injected }}
+      {{{body}}}
+    </div>
 
     {{! placeholder for where the view will be injected }}
   </body>

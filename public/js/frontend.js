@@ -16,7 +16,7 @@ $(function () {
     var formData = { email: email, password: password };
     $.ajax({
       type: 'POST',
-      url: '/api/users',
+      url: '/api/users/doregister',
       data: formData,
       dataType: 'json',
       encode: true,
@@ -41,7 +41,7 @@ $(function () {
     var formData = { email: email, password: password };
     $.ajax({
       type: 'POST',
-      url: '/api/users/login',
+      url: '/api/users/dologin',
       data: formData,
       dataType: 'json',
       encode: true,
@@ -68,7 +68,6 @@ $(function () {
       encode: true,
     }).done(function (data) {
       if (data.status == 'success') {
-
         $('.isLoggedIn').show();
 
         $.ajax({
@@ -77,33 +76,42 @@ $(function () {
           dataType: 'json',
           encode: true,
         }).done(function (data) {
-
-          var tableHtml = '\
-                            <tr class=\'ui-widget-header\'>\
+          var tableHtml =
+            "\
+                            <tr class='ui-widget-header'>\
                                 <td>Name</td>\
                                 <td>Price</td>\
                                 <td>Description</td>\
                                 <td>Image</td>\
                                 <td></td>\
                             </tr>\
-                ';
+                ";
           for (let i in data) {
-            tableHtml += '\
+            tableHtml +=
+              '\
                             <tr>\
-                                <td>'+ data[i].product_name + '</td>\
-                                <td>'+ data[i].price + '</td>\
-                                <td>'+ data[i].description + '</td>\
-                                <td><img width="300" src="'+ data[i].image + '"></td>\
-                                <td><button onclick=\'removeProduct('+ data[i].id + ')\'>Remove</button></td>\
+                                <td>' +
+              data[i].product_name +
+              '</td>\
+                                <td>' +
+              data[i].price +
+              '</td>\
+                                <td>' +
+              data[i].description +
+              '</td>\
+                                <td><img width="300" src="' +
+              data[i].image +
+              '"></td>\
+                                <td><button onclick=\'removeProduct(' +
+              data[i].id +
+              ")'>Remove</button></td>\
                             </tr>\
-                ';
+                ";
           }
 
           $('#productsTable').html(tableHtml);
 
           $('.isLoggedIn').show();
-
-
         });
       } else {
         $('.notloggedIn').show();
@@ -117,32 +125,38 @@ $(function () {
       dataType: 'json',
       encode: true,
     }).done(function (data) {
-
-      var tableHtml = '\
-                            <tr class=\'ui-widget-header\'>\
+      var tableHtml =
+        "\
+                            <tr class='ui-widget-header'>\
                                 <td>Name</td>\
                                 <td>Price</td>\
                                 <td>Description</td>\
                                 <td>Image</td>\
                             </tr>\
-                ';
+                ";
       for (let i in data) {
-        tableHtml += '\
+        tableHtml +=
+          '\
                             <tr>\
-                                <td>'+ data[i].product_name + '</td>\
-                                <td>'+ data[i].price + '</td>\
-                                <td>'+ data[i].description + '</td>\
-                                <td><img width="300" src="'+ data[i].image + '"></td>\
+                                <td>' +
+          data[i].product_name +
+          '</td>\
+                                <td>' +
+          data[i].price +
+          '</td>\
+                                <td>' +
+          data[i].description +
+          '</td>\
+                                <td><img width="300" src="' +
+          data[i].image +
+          '"></td>\
                             </tr>\
                 ';
       }
 
       $('#productsTable').html(tableHtml);
-
-
     });
   }
-
 });
 
 /** New Product **/
@@ -153,7 +167,12 @@ $('#productForm').on('submit', (e) => {
   let description = $('input[name=productDescription]').val();
   let image = $('input[name=productImage]').val();
 
-  var formData = { name: name, price: price, description: description, image: image };
+  var formData = {
+    name: name,
+    price: price,
+    description: description,
+    image: image,
+  };
   $.ajax({
     type: 'POST',
     url: '/api/products/add',
@@ -165,14 +184,12 @@ $('#productForm').on('submit', (e) => {
       location.reload();
     }
   });
-
 });
 
 /** Remove Product **/
 function removeProduct(productId) {
   var option = confirm('Remove product ?');
   if (option) {
-
     var formData = { productId: productId };
     $.ajax({
       type: 'POST',
@@ -185,8 +202,17 @@ function removeProduct(productId) {
         location.reload();
       }
     });
-
   }
-
 }
+var clients = document.getElementById('clients');
+var services = document.getElementById('services');
 
+clients.addEventListener('click', function () {
+  $(clients).toggleClass("active");
+  $(".parent:not(#clients)").toggleClass("invisible");
+}, false);
+
+services.addEventListener('click', function () {
+  $(services).toggleClass("active");
+  $(".parent:not(#services)").toggleClass("invisible");
+}, false);

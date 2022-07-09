@@ -1,10 +1,8 @@
-
 /* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
 // example frontend js file loaded into the views that need FE logic (clicks, forms, interactions, etc.)
 
 $(function () {
-
   /** Register **/
   $('#registerForm').on('submit', (e) => {
     e.preventDefault();
@@ -20,15 +18,13 @@ $(function () {
       encode: true,
     }).done(function (data) {
       // eslint-disable-next-line eqeqeq
-      if(data.status == 'success') {
+      if (data.status == 'success') {
         $('.success').show();
       } else {
         $('.error').show();
       }
     });
-
   });
-
 
   /** Login **/
   $('#loginForm').on('submit', (e) => {
@@ -45,13 +41,12 @@ $(function () {
       encode: true,
     }).done(function (data) {
       // eslint-disable-next-line eqeqeq
-      if(data.status == 'success') {
+      if (data.status == 'success') {
         $('.success').show();
       } else {
         $('.error').show();
       }
     });
-
   });
 
   $.ajax({
@@ -61,18 +56,18 @@ $(function () {
     encode: true,
   }).done(function (data) {
     // eslint-disable-next-line eqeqeq
-    if(data.status == 'success') {
+    if (data.status == 'success') {
       $('.isLoggedIn').show();
     } else {
       $('.notloggedIn').show();
     }
   });
 
-  var path = window. location. pathname;
-  var page = path. split('/'). pop();
+  var path = window.location.pathname;
+  var page = path.split('/').pop();
 
-  if(page == 'products') {
-  /*** My Products List */
+  if (page == 'products') {
+    /*** My Products List */
     $.ajax({
       type: 'GET',
       url: '/api/users/isloggedin',
@@ -80,7 +75,6 @@ $(function () {
       encode: true,
     }).done(function (data) {
       if (data.status == 'success') {
-
         $('.isLoggedIn').show();
 
         $.ajax({
@@ -89,72 +83,87 @@ $(function () {
           dataType: 'json',
           encode: true,
         }).done(function (data) {
-
-          var tableHtml = '\
-                            <tr class=\'ui-widget-header\'>\
+          var tableHtml =
+            "\
+                            <tr class='ui-widget-header'>\
                                 <td>Name</td>\
                                 <td>Price</td>\
                                 <td>Description</td>\
                                 <td>Image</td>\
                                 <td></td>\
                             </tr>\
-                ';
+                ";
           for (let i in data) {
-            tableHtml += '\
+            tableHtml +=
+              '\
                             <tr>\
-                                <td>'+ data[i].product_name + '</td>\
-                                <td>'+ data[i].price + '</td>\
-                                <td>'+ data[i].description + '</td>\
-                                <td><img width="300" src="'+ data[i].image + '"></td>\
-                                <td><button onclick=\'removeProduct('+ data[i].id + ')\'>Remove</button></td>\
+                                <td>' +
+              data[i].product_name +
+              '</td>\
+                                <td>' +
+              data[i].price +
+              '</td>\
+                                <td>' +
+              data[i].description +
+              '</td>\
+                                <td><img width="300" src="' +
+              data[i].image +
+              '"></td>\
+                                <td><button onclick=\'removeProduct(' +
+              data[i].id +
+              ")'>Remove</button></td>\
                             </tr>\
-                ';
+                ";
           }
 
           $('#productsTable').html(tableHtml);
 
           $('.isLoggedIn').show();
-
-
         });
       } else {
         $('.notloggedIn').show();
       }
     });
-  } else if(path=='/') {
-  /**Homepage List */
+  } else if (path == '/') {
+    /**Homepage List */
     $.ajax({
       type: 'GET',
       url: '/api/products/list',
       dataType: 'json',
       encode: true,
     }).done(function (data) {
-
-      var tableHtml = '\
-                            <tr class=\'ui-widget-header\'>\
+      var tableHtml =
+        "\
+                            <tr class='ui-widget-header'>\
                                 <td>Name</td>\
                                 <td>Price</td>\
                                 <td>Description</td>\
                                 <td>Image</td>\
                             </tr>\
-                ';
+                ";
       for (let i in data) {
-        tableHtml += '\
+        tableHtml +=
+          '\
                             <tr>\
-                                <td>'+ data[i].product_name + '</td>\
-                                <td>'+ data[i].price + '</td>\
-                                <td>'+ data[i].description + '</td>\
-                                <td><img width="300" src="'+ data[i].image + '"></td>\
+                                <td>' +
+          data[i].product_name +
+          '</td>\
+                                <td>' +
+          data[i].price +
+          '</td>\
+                                <td>' +
+          data[i].description +
+          '</td>\
+                                <td><img width="300" src="' +
+          data[i].image +
+          '"></td>\
                             </tr>\
                 ';
       }
 
       $('#productsTable').html(tableHtml);
-
-
     });
   }
-
 });
 
 /** New Product **/
@@ -165,7 +174,12 @@ $('#productForm').on('submit', (e) => {
   let description = $('input[name=productDescription]').val();
   let image = $('input[name=productImage]').val();
 
-  var formData = { name: name, price: price, description: description, image: image };
+  var formData = {
+    name: name,
+    price: price,
+    description: description,
+    image: image,
+  };
   $.ajax({
     type: 'POST',
     url: '/api/products/add',
@@ -177,14 +191,12 @@ $('#productForm').on('submit', (e) => {
       location.reload();
     }
   });
-
 });
 
 /** Remove Product **/
 function removeProduct(productId) {
   var option = confirm('Remove product ?');
   if (option) {
-
     var formData = { productId: productId };
     $.ajax({
       type: 'POST',
@@ -197,9 +209,7 @@ function removeProduct(productId) {
         location.reload();
       }
     });
-
   }
-
 }
 
 /* eslint-disable no-unused-vars */
@@ -207,7 +217,6 @@ function removeProduct(productId) {
 // example frontend js file loaded into the views that need FE logic (clicks, forms, interactions, etc.)
 
 $(function () {
-
   /** Register **/
   $('#registerForm').on('submit', (e) => {
     e.preventDefault();
@@ -223,15 +232,13 @@ $(function () {
       encode: true,
     }).done(function (data) {
       // eslint-disable-next-line eqeqeq
-      if(data.status == 'success') {
+      if (data.status == 'success') {
         $('.success').show();
       } else {
         $('.error').show();
       }
     });
-
   });
-
 
   /** Login **/
   $('#loginForm').on('submit', (e) => {
@@ -248,13 +255,12 @@ $(function () {
       encode: true,
     }).done(function (data) {
       // eslint-disable-next-line eqeqeq
-      if(data.status == 'success') {
+      if (data.status == 'success') {
         $('.success').show();
       } else {
         $('.error').show();
       }
     });
-
   });
 
   $.ajax({
@@ -264,18 +270,18 @@ $(function () {
     encode: true,
   }).done(function (data) {
     // eslint-disable-next-line eqeqeq
-    if(data.status == 'success') {
+    if (data.status == 'success') {
       $('.isLoggedIn').show();
     } else {
       $('.notloggedIn').show();
     }
   });
 
-  var path = window. location. pathname;
-  var page = path. split('/'). pop();
+  var path = window.location.pathname;
+  var page = path.split('/').pop();
 
-  if(page == 'products') {
-  /*** My Products List */
+  if (page == 'products') {
+    /*** My Products List */
     $.ajax({
       type: 'GET',
       url: '/api/users/isloggedin',
@@ -283,7 +289,6 @@ $(function () {
       encode: true,
     }).done(function (data) {
       if (data.status == 'success') {
-
         $('.isLoggedIn').show();
 
         $.ajax({
@@ -292,72 +297,87 @@ $(function () {
           dataType: 'json',
           encode: true,
         }).done(function (data) {
-
-          var tableHtml = '\
-                            <tr class=\'ui-widget-header\'>\
+          var tableHtml =
+            "\
+                            <tr class='ui-widget-header'>\
                                 <td>Name</td>\
                                 <td>Price</td>\
                                 <td>Description</td>\
                                 <td>Image</td>\
                                 <td></td>\
                             </tr>\
-                ';
+                ";
           for (let i in data) {
-            tableHtml += '\
+            tableHtml +=
+              '\
                             <tr>\
-                                <td>'+ data[i].product_name + '</td>\
-                                <td>'+ data[i].price + '</td>\
-                                <td>'+ data[i].description + '</td>\
-                                <td>'+ data[i].image + '</td>\
-                                <td><button onclick=\'removeProduct('+ data[i].id + ')\'>Remove</button></td>\
+                                <td>' +
+              data[i].product_name +
+              '</td>\
+                                <td>' +
+              data[i].price +
+              '</td>\
+                                <td>' +
+              data[i].description +
+              '</td>\
+                                <td>' +
+              data[i].image +
+              "</td>\
+                                <td><button onclick='removeProduct(" +
+              data[i].id +
+              ")'>Remove</button></td>\
                             </tr>\
-                ';
+                ";
           }
 
           $('#productsTable').html(tableHtml);
 
           $('.isLoggedIn').show();
-
-
         });
       } else {
         $('.notloggedIn').show();
       }
     });
-  } else if(path=='/') {
-  /**Homepage List */
+  } else if (path == '/') {
+    /**Homepage List */
     $.ajax({
       type: 'GET',
       url: '/api/products/list',
       dataType: 'json',
       encode: true,
     }).done(function (data) {
-
-      var tableHtml = '\
-                            <tr class=\'ui-widget-header\'>\
+      var tableHtml =
+        "\
+                            <tr class='ui-widget-header'>\
                                 <td>Name</td>\
                                 <td>Price</td>\
                                 <td>Description</td>\
                                 <td>Image</td>\
                             </tr>\
-                ';
+                ";
       for (let i in data) {
-        tableHtml += '\
+        tableHtml +=
+          '\
                             <tr>\
-                                <td>'+ data[i].product_name + '</td>\
-                                <td>'+ data[i].price + '</td>\
-                                <td>'+ data[i].description + '</td>\
-                                <td>'+ data[i].image + '</td>\
+                                <td>' +
+          data[i].product_name +
+          '</td>\
+                                <td>' +
+          data[i].price +
+          '</td>\
+                                <td>' +
+          data[i].description +
+          '</td>\
+                                <td>' +
+          data[i].image +
+          '</td>\
                             </tr>\
                 ';
       }
 
       $('#productsTable').html(tableHtml);
-
-
     });
   }
-
 });
 
 /** New Product **/
@@ -368,7 +388,12 @@ $('#productForm').on('submit', (e) => {
   let description = $('input[name=productDescription]').val();
   let image = $('input[name=productImage]').val();
 
-  var formData = { name: name, price: price, description: description, image: image };
+  var formData = {
+    name: name,
+    price: price,
+    description: description,
+    image: image,
+  };
   $.ajax({
     type: 'POST',
     url: '/api/products/add',
@@ -380,14 +405,12 @@ $('#productForm').on('submit', (e) => {
       location.reload();
     }
   });
-
 });
 
 /** Remove Product **/
 function removeProduct(productId) {
   var option = confirm('Remove product ?');
   if (option) {
-
     var formData = { productId: productId };
     $.ajax({
       type: 'POST',
@@ -400,7 +423,20 @@ function removeProduct(productId) {
         location.reload();
       }
     });
-
   }
+}
+function othername() {
+  var description = document.getElementById('description').value;
+  var price = document.getElementById('price').value;
+  createDiv(description, price);
+}
 
+//create a function that makes a new div
+function createDiv(description, price) {
+  var newDiv = document.createElement('div');
+  var picture = document.getElementById('file-upload').value;
+  newDiv.innerHTML = `<div>${picture}</div><p>$${price}</p><p>${description}</p>`;
+  document.body.appendChild(newDiv);
+  //add a class name to the div
+  newDiv.className = 'newDiv';
 }

@@ -21,6 +21,7 @@ password: {
 {
   sequelize,
   modelName: 'user',
+  freezeTableName: true,
 });
 
 module.exports = User;

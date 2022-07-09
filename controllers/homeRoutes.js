@@ -1,21 +1,19 @@
 
 //These are all the view routes for your application
 const router = require('express').Router();
-const { User, Product} = require('../models');
+const { User, Product } = require('../models');
 const authy = require('../utils/helpers');
 
 //when a GET request is received on the root(/) route,
 //render the home.handlebars view
 router.get('/', authy, async (req, res) => {
   try {
-    const dbProducts = await Product.findAll({
-      include: [{
-        model: Product,
-        attributes: ['id', 'product_name', 'price', 'imageUrl'],
-      }]
-    });
+    const dbProducts = await Product.findAll();
+
+    //serialize the products {dataValues:{producstuff}, meta, meta}
+    const products = dbProducts.map(product => product.get({ plain: true }));
     res.render('home', {
-      products: dbProducts,
+      products: products,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -32,7 +30,7 @@ router.get('/product/:id', authy, async (req, res) => {
         attributes: ['id', 'name', 'price', 'imageUrl'],
       }]
     });
-    res.render('product', {
+    res.render('products', {
       product: dbProduct,
       loggedIn: req.session.loggedIn,
     });
@@ -40,44 +38,44 @@ router.get('/product/:id', authy, async (req, res) => {
     console.log(err);
     res.status(500).json(err);
   }
-  res.render('productpage');
+  // res.render('productpage');
 });
 
-router.get('/category', authy, async (req, res) => {
-  try {
-    const dbProducts = await Product.findAll({
-      include: [{
-        model: Product,
-        attributes: ['id', 'name', 'price', 'imageUrl'],
-      }]
-    });
-    res.render('category', {
-      products: dbProducts,
-      loggedIn: req.session.loggedIn,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
+// router.get('/category', authy, async (req, res) => {
+//   try {
+//     const dbProducts = await Product.findAll({
+//       include: [{
+//         model: Product,
+//         attributes: ['id', 'name', 'price', 'imageUrl'],
+//       }]
+//     });
+//     res.render('category', {
+//       products: dbProducts,
+//       loggedIn: req.session.loggedIn,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
 
-router.get('/category/:id', authy, async (req, res) => {
-  try {
-    const dbproducts = await Product.findByPk(req.params.id, {
-      include: [{
-        model: Product,
-        attributes: ['id', 'name', 'price', 'imageUrl'],
-      }],
-    });
-    res.render('category', {
-      products: dbproducts,
-      loggedIn: req.session.loggedIn,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
+// router.get('/category/:id', authy, async (req, res) => {
+//   try {
+//     const dbproducts = await Product.findByPk(req.params.id, {
+//       include: [{
+//         model: Product,
+//         attributes: ['id', 'name', 'price', 'imageUrl'],
+//       }],
+//     });
+//     res.render('category', {
+//       products: dbproducts,
+//       loggedIn: req.session.loggedIn,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
 
 
 router.get('/login', (req, res) => {
@@ -92,14 +90,32 @@ router.get('/register', async (req, res) => {
   try {
     const dbUsers = await User.findAll();
     res.render('register', {
-      // users: dbUsers,
-      loggedIn: req.session.loggedIn,
+      users: dbUsers,
+      // loggedIn: req.session.loggedIn,
     });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 
+});
+
+router.get('/checkout', async (req, res) => {
+  try {
+    const dbProducts = await Product.findAll({
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'price', 'imageUrl'],
+      }]
+    });
+    res.render('checkout', {
+      products: dbProducts,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 router.get('/logout', async (req, res) => {

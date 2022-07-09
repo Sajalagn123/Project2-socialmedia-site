@@ -11,6 +11,7 @@
       href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css'
     />
     <link rel='stylesheet' href='/css/jass.css' />
+    <link rel='stylesheet' href='/css/style.css' />
     <script
       src='https://code.jquery.com/jquery-3.6.0.min.js'
       integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4='
@@ -21,22 +22,36 @@
     ></script>
 
   </head>
+
+  <style>
+    * { color: whitesmoke } .ui-widget-header td { color:darkgreen!important }
+  </style>
   <body>
     {{! this is the main html file wrapper for all your views }}
+    <header>
+      <a href='#' class='logo'>Cart This</a>
+      <div class='toggle'></div>
+      <ul>
+        <li><a href='/'>Homepage</a></li>
+        <li><a href='/register'>Register</a></li>
+        <li><a href='/login'>Login</a></li>
+        <li><a href='/products'>My Products</a></li>
+        <li><a href='/logout'>Logout</a>
+        </li>
+      </ul>
+    </header>
+    <div class='content' style='margin-top:175px'>
 
-    <a class='ui-button' href='/'>Homepage</a>
-    <a class='ui-button' href='/register'>Register</a>
-    <a class='ui-button' href='/login'>Login</a>
-    <a class='ui-button' href='/products'>My Products</a>
-
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a class='ui-button' href='/logout'>Logout</a>
-
+      {{! placeholder for where the view will be injected }}
+      {{{body}}}
+    </div>
 
     {{! placeholder for where the view will be injected }}
-    {{{body}}}
-
-    {{! placeholder for where the view will be injected }}
+    <script type='text/javascript'>
+      window.addEventListener('scroll', function () { var header =
+      document.querySelector('header'); header.classList.toggle('sticky',
+      window.scrollY > 0); });
+    </script>
   </body>
   <script src='/js/frontend.js'></script>
 </html>

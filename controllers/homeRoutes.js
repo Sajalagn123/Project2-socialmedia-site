@@ -1,5 +1,4 @@
 
-//These are all the view routes for your application
 const router = require('express').Router();
 const { User, Product } = require('../models');
 const authy = require('../utils/helpers');
@@ -14,6 +13,8 @@ router.get('/', async (req, res) => {
         model: User,
       }]
     });
+    const products = dbProducts.map(product => product.get({ plain: true }));
+
     res.render('home', {
       products: products,
       loggedIn: req.session.loggedIn,
@@ -26,15 +27,12 @@ router.get('/', async (req, res) => {
 
 router.get('/product/:id', authy, async (req, res) => {
   try {
-    const dbProduct = await Product.findByPk(req.params.id, {
-      include: [{
-        // model: Product,
-        attributes: ['id', 'name', 'price', 'image'],
-      }]
-    });
-    // const product1 = dbProduct.get({ plain: true });
+    const dbProduct = await Product.findByPk(req.params.id);
+    // const product1 = dbProducts.map(product => product.get({ plain: true }));
+    const product1 = dbProduct.get({ plain: true });
+    console.log(product1);
     res.render('products', {
-      product: dbProduct,
+      product: product1,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

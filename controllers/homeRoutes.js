@@ -14,7 +14,7 @@ router.get('/',  async (req, res) => {
       }]
     });
     res.render('home', {
-      products: dbProducts,
+      products: products,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -27,11 +27,11 @@ router.get('/product/:id', authy, async (req, res) => {
   try {
     const dbProduct = await Product.findByPk(req.params.id, {
       include: [{
-        model: Product,
+        // model: Product,
         attributes: ['id', 'name', 'price', 'imageUrl'],
       }]
     });
-    res.render('product', {
+    res.render('products', {
       product: dbProduct,
       loggedIn: req.session.loggedIn,
     });
@@ -39,18 +39,77 @@ router.get('/product/:id', authy, async (req, res) => {
     console.log(err);
     res.status(500).json(err);
   }
-  res.render('productpage');
+  // res.render('productpage');
 });
 
-router.get('/category', authy, async (req, res) => {
+// router.get('/category', authy, async (req, res) => {
+//   try {
+//     const dbProducts = await Product.findAll({
+//       include: [{
+//         model: Product,
+//         attributes: ['id', 'name', 'price', 'imageUrl'],
+//       }]
+//     });
+//     res.render('category', {
+//       products: dbProducts,
+//       loggedIn: req.session.loggedIn,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
+
+// router.get('/category/:id', authy, async (req, res) => {
+//   try {
+//     const dbproducts = await Product.findByPk(req.params.id, {
+//       include: [{
+//         model: Product,
+//         attributes: ['id', 'name', 'price', 'imageUrl'],
+//       }],
+//     });
+//     res.render('category', {
+//       products: dbproducts,
+//       loggedIn: req.session.loggedIn,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
+
+
+router.get('/login', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('login');
+});
+
+router.get('/register', async (req, res) => {
+  try {
+    const dbUsers = await User.findAll();
+    res.render('register', {
+      users: dbUsers,
+      // loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+
+});
+
+router.get('/checkout', async (req, res) => {
   try {
     const dbProducts = await Product.findAll({
-      include: [{
-        model: Product,
-        attributes: ['id', 'name', 'price', 'imageUrl'],
-      }]
+      // include: [{
+      //   // model: Product,
+      //   attributes: ['id', 'name', 'price', 'imageUrl'],
+      // }]
     });
-    res.render('category', {
+    res.render('checkout', {
       products: dbProducts,
       loggedIn: req.session.loggedIn,
     });
@@ -60,31 +119,15 @@ router.get('/category', authy, async (req, res) => {
   }
 });
 
-router.get('/category/:id', authy, async (req, res) => {
+router.get('/logout', async (req, res) => {
   try {
-    const dbproducts = await Product.findByPk(req.params.id, {
-      include: [{
-        model: Product,
-        attributes: ['id', 'name', 'price', 'imageUrl'],
-      }],
-    });
-    res.render('category', {
-      products: dbproducts,
-      loggedIn: req.session.loggedIn,
+    req.session.destroy(() => {
+      res.redirect('/');
     });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
-});
-
-
-router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
-  res.render('login');
 });
 
 module.exports = router;

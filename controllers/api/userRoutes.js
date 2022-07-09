@@ -21,6 +21,7 @@ const { User } = require('../../models');
 
 router.post('/', async (req, res) => {
   try {
+    // eslint-disable-next-line no-unused-vars
     const UserData = await User.create({
       // email: req.body.email,
       password: req.body.password,

@@ -6,8 +6,9 @@ const authy = require('../utils/helpers');
 
 //when a GET request is received on the root(/) route,
 //render the home.handlebars view
-router.get('/',  async (req, res) => {
+router.get('/', async (req, res) => {
   try {
+    // eslint-disable-next-line no-unused-vars
     const dbProducts = await Product.findAll({
       include: [{
         model: User,

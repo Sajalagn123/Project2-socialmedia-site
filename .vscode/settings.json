@@ -1,7 +1,10 @@
-=======
+{
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[sql]": {
     "editor.defaultFormatter": "mtxr.sqltools"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   }
 }

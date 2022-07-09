@@ -1,7 +1,7 @@
 # Cart This - e-commerce website project
 
 ## Description 
-Users are able to pruchase various items online which varry by price.
+Users are able to pruchase various items online such as different articles of clothing.
 
 ## Features 
 Ability to view items by name, price, and image. Users can also view the description of an item as well.

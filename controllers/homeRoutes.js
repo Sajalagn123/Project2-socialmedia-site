@@ -102,5 +102,16 @@ router.get('/register', async (req, res) => {
 
 });
 
+router.get('/logout', async (req, res) => {
+  try {
+    req.session.destroy(() => {
+      res.redirect('/');
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 
 module.exports = router;

@@ -26,7 +26,7 @@ router.get('/product/:id', authy, async (req, res) => {
   try {
     const dbProduct = await Product.findByPk(req.params.id, {
       include: [{
-        model: Product,
+        // model: Product,
         attributes: ['id', 'name', 'price', 'imageUrl'],
       }]
     });
@@ -103,10 +103,10 @@ router.get('/register', async (req, res) => {
 router.get('/checkout', async (req, res) => {
   try {
     const dbProducts = await Product.findAll({
-      include: [{
-        model: Product,
-        attributes: ['id', 'name', 'price', 'imageUrl'],
-      }]
+      // include: [{
+      //   // model: Product,
+      //   attributes: ['id', 'name', 'price', 'imageUrl'],
+      // }]
     });
     res.render('checkout', {
       products: dbProducts,

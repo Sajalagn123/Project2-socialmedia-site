@@ -6,13 +6,15 @@ const authy = require('../utils/helpers');
 
 //when a GET request is received on the root(/) route,
 //render the home.handlebars view
-router.get('/',  async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const dbProducts = await Product.findAll({
       include: [{
         model: User,
       }]
     });
+    const products = dbProducts.map(product => product.get({ plain: true }));
+
     res.render('home', {
       products: products,
       loggedIn: req.session.loggedIn,
@@ -25,15 +27,12 @@ router.get('/',  async (req, res) => {
 
 router.get('/product/:id', authy, async (req, res) => {
   try {
-    const dbProduct = await Product.findByPk(req.params.id, {
-      include: [{
-        // model: Product,
-        attributes: ['id', 'name', 'price', 'image'],
-      }]
-    });
-    // const product1 = dbProduct.get({ plain: true });
+    const dbProduct = await Product.findByPk(req.params.id);
+    // const product1 = dbProducts.map(product => product.get({ plain: true }));
+    const product1 = dbProduct.get({ plain: true });
+    console.log(product1)
     res.render('products', {
-      product: dbProduct,
+      product: product1,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

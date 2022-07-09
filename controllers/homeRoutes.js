@@ -27,9 +27,10 @@ router.get('/product/:id', authy, async (req, res) => {
     const dbProduct = await Product.findByPk(req.params.id, {
       include: [{
         // model: Product,
-        attributes: ['id', 'name', 'price', 'imageUrl'],
+        attributes: ['id', 'name', 'price', 'image'],
       }]
     });
+    // const product1 = dbProduct.get({ plain: true });
     res.render('products', {
       product: dbProduct,
       loggedIn: req.session.loggedIn,

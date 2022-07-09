@@ -19,7 +19,6 @@ const { User } = require('../../models');
 //   }
 // });
 
-
 router.post('/', async (req, res) => {
   try {
     const UserData = await User.create({

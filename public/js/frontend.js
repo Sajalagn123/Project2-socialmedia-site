@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
 // example frontend js file loaded into the views that need FE logic (clicks, forms, interactions, etc.)
-var path = window. location. pathname;
-var page = path. split('/'). pop();
+var path = window.location.pathname;
+var page = path.split('/').pop();
 
 $(function () {
 
@@ -22,7 +22,7 @@ $(function () {
       encode: true,
     }).done(function (data) {
       // eslint-disable-next-line eqeqeq
-      if(data.status == 'success') {
+      if (data.status == 'success') {
         $('.success').show();
       } else {
         $('.error').show();
@@ -47,7 +47,7 @@ $(function () {
       encode: true,
     }).done(function (data) {
       // eslint-disable-next-line eqeqeq
-      if(data.status == 'success') {
+      if (data.status == 'success') {
         $('.success').show();
       } else {
         $('.error').show();
@@ -71,8 +71,8 @@ $(function () {
   // });
 
 
-  if(page == 'products') {
-  /*** My Products List */
+  if (page == 'products') {
+    /*** My Products List */
     $.ajax({
       type: 'GET',
       url: '/api/users/isloggedin',
@@ -121,8 +121,8 @@ $(function () {
         $('.notloggedIn').show();
       }
     });
-  } else if(path=='/') {
-  /**Homepage List */
+  } else if (path == '/') {
+    /**Homepage List */
     $.ajax({
       type: 'GET',
       url: '/api/products/list',

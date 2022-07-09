@@ -4,7 +4,6 @@ const { Product } = require('../../models');
 
 
 router.get('/list', function (req, res) {
-
   //res.send('products list');
   Product.findAll()
     .then((products) => {

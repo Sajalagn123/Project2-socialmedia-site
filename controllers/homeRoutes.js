@@ -3,9 +3,11 @@ const router = require('express').Router();
 const { User, Product } = require('../models');
 const authy = require('../utils/helpers');
 
-
+//when a GET request is received on the root(/) route,
+//render the home.handlebars view
 router.get('/', async (req, res) => {
   try {
+    // eslint-disable-next-line no-unused-vars
     const dbProducts = await Product.findAll({
       include: [{
         model: User,
@@ -28,7 +30,7 @@ router.get('/product/:id', authy, async (req, res) => {
     const dbProduct = await Product.findByPk(req.params.id);
     // const product1 = dbProducts.map(product => product.get({ plain: true }));
     const product1 = dbProduct.get({ plain: true });
-    console.log(product1)
+    console.log(product1);
     res.render('products', {
       product: product1,
       loggedIn: req.session.loggedIn,

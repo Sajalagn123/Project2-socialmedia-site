@@ -8,4 +8,3 @@ const authy = (req, res, next) => {
 };
 
 module.exports = authy;
-=======

@@ -6,12 +6,13 @@ const authy = require('../utils/helpers');
 
 //when a GET request is received on the root(/) route,
 //render the home.handlebars view
-router.get('/', authy, async (req, res) => {
+router.get('/',  async (req, res) => {
   try {
-    const dbProducts = await Product.findAll();
-
-    //serialize the products {dataValues:{producstuff}, meta, meta}
-    const products = dbProducts.map(product => product.get({ plain: true }));
+    const dbProducts = await Product.findAll({
+      include: [{
+        model: User,
+      }]
+    });
     res.render('home', {
       products: products,
       loggedIn: req.session.loggedIn,
@@ -128,6 +129,5 @@ router.get('/logout', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 
 module.exports = router;

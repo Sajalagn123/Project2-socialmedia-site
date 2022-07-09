@@ -9,6 +9,7 @@
 
     <!--include jQuery-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel = "stylesheet" href = "css/style.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -16,15 +17,15 @@
   </head>
   <body>
     {{! this is the main html file wrapper for all your views }}
-
+<nav>
+    <a class="ui-button" href="/login">Login</a>
     <a class="ui-button" href="/">Homepage</a>
     <a class="ui-button" href="/register">Register</a>
-    <a class="ui-button" href="/login">Login</a>
     <a class="ui-button" href="/products">My Products</a>
 
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a class="ui-button" href="/logout">Logout</a>
-
+</nav>
 
     {{! placeholder for where the view will be injected }}
     {{{body}}}

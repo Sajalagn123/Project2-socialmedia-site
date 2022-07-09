@@ -22,17 +22,18 @@ router.get('/', authy, async (req, res) => {
   }
 });
 
-router.get('/product/:id', authy, async (req, res) => {
+router.get('/:id', authy, async (req, res) => {
   try {
     const dbProduct = await Product.findByPk(req.params.id, {
       include: [{
-        // model: Product,
+        model: Product,
         attributes: ['id', 'name', 'price', 'image'],
       }]
     });
+    const product2 = dbProducts.map(product => product.get({ plain: true }));
     // const product1 = dbProduct.get({ plain: true });
     res.render('products', {
-      product: dbProduct,
+      product: product1,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {

@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
 // example frontend js file loaded into the views that need FE logic (clicks, forms, interactions, etc.)
- var path = window. location. pathname;
-  var page = path. split('/'). pop();
+var path = window. location. pathname;
+var page = path. split('/'). pop();
 
 $(function () {
 
